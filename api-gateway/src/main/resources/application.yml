@@ -1,0 +1,41 @@
+server:
+    port: 9090
+    servlet:
+      context-path: /api-gateway
+        
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+            discovery:
+                enabled: true
+    endpoint:
+        health:
+          show-details: always
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/service-discovery/eureka
+            
+book:
+  jwtSecret: 8b8c590c7f174NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RJKNLDF786ydfkls3075b9c2b5b3baac9c75
+  jwtExpiration: 30000000
+  
+resilience4j.circuitbreaker:
+  instances:
+    userServiceCircuitBreaker:
+        failureRateThreshold: 50  # Threshold for failure rate (50% of requests failing will open the circuit)
+        waitDurationInOpenState: 10000ms  # How long to wait before retrying after opening
+        slidingWindowSize: 10  # Sliding window size to track requests
+        permittedNumberOfCallsInHalfOpenState: 5  # Number of allowed calls in half-open state
+        minimumNumberOfCalls: 5  # Minimum calls before determining failure rate
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException  # Record HTTP 5xx errors
+          - org.springframework.web.client.ResourceAccessException  # Record timeouts

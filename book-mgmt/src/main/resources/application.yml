@@ -1,0 +1,32 @@
+server:
+  port: 9676
+  servlet:
+    context-path: /user-mgmt
+spring:
+  application:
+     name: user-mgmt
+  datasource:
+     url: jdbc:mysql://localhost:3306/bookmgmt?createDatabaseIfNotExist=true
+     username: sagari
+     password: sagari
+     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+book:
+  jwtSecret: 8b8c590c7f174NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RJKNLDF786ydfkls3075b9c2b5b3baac9c75
+  jwtExpiration: 30000000
+  
+eureka:
+   client:
+     service-url:
+       defaultZone: http://localhost:8761/service-discovery/eureka
+API_GATEWAY: http://localhost:9090/user-mgmt
+        
+        
+ 
+     
