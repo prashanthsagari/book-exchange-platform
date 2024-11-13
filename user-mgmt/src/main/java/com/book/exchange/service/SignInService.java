@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.book.exchange.entity.User;
+import com.book.exchange.exception.UserNotRegisteredException;
 import com.book.exchange.model.payload.request.SignInRequest;
 import com.book.exchange.model.payload.response.TokenResponse;
 import com.book.exchange.model.payload.response.UserResponse;
@@ -34,17 +36,24 @@ public class SignInService {
 	public TokenResponse signIn(final SignInRequest singInRequest) {
 
 		UserReturnDataContextHolder.setLoginRequest(singInRequest);
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(singInRequest.getUsername(), singInRequest.getPassword()));
+		Authentication authentication = null;
+		try {
+			authentication = authenticationManager.authenticate(
+			        new UsernamePasswordAuthenticationToken(singInRequest.getUsername(), singInRequest.getPassword()));
+
+		} catch (AuthenticationException unr) {
+           throw new UserNotRegisteredException(" User is not registered in the system.");
+		}
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtility.generateJwtToken(authentication);
 
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		Set<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-				.collect(Collectors.toSet());
+		        .collect(Collectors.toSet());
 
 		User user = userRepository.findByUsername(singInRequest.getUsername())
-				.orElseThrow(() -> new UsernameNotFoundException(" User is not found."));
+		        .orElseThrow(() -> new UserNotRegisteredException(" User is not registered in the system."));
 		Long attempts = user.getAttempts();
 
 		if (attempts >= 1) {
@@ -53,8 +62,8 @@ public class SignInService {
 		}
 
 		UserResponse userResponse = UserResponse.builder().id(userDetails.getUser_id()).attempts(user.getAttempts())
-				.username(userDetails.getUsername()).email(userDetails.getEmail()).phone(userDetails.getPhone())
-				.isactive(userDetails.getIsactive()).roles(roles).build();
+		        .username(userDetails.getUsername()).email(userDetails.getEmail()).phone(userDetails.getPhone())
+		        .isactive(userDetails.getIsactive()).roles(roles).build();
 
 		return new TokenResponse(jwt, userResponse);
 	}

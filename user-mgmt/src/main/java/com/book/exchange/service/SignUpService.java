@@ -11,6 +11,7 @@ import com.book.exchange.entity.Role;
 import com.book.exchange.entity.User;
 import com.book.exchange.enums.ERole;
 import com.book.exchange.exception.ResourceAlreadyAvailable;
+import com.book.exchange.exception.RoleNotFoundException;
 import com.book.exchange.model.payload.request.SignupRequest;
 import com.book.exchange.model.payload.response.UserResponse;
 import com.book.exchange.repository.RoleRepository;
@@ -47,19 +48,19 @@ public class SignUpService {
 
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					.orElseThrow(() -> new RoleNotFoundException("Error: Role is not found."));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RoleNotFoundException("Error: Role is not found."));
 					roles.add(adminRole);
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RoleNotFoundException("Error: Role is not found."));
 					roles.add(userRole);
 				}
 			});

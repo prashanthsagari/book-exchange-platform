@@ -103,6 +103,7 @@
     <modules>
         <module>api-gateway</module>
         <module>eureka-service-discovery-exchange-platform</module>
+        <module>user-mgmt</module>
         <module>book-mgmt</module>
     </modules>
 

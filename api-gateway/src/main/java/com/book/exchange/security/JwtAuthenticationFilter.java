@@ -40,7 +40,8 @@ public class JwtAuthenticationFilter implements GatewayFilter {
 		// whitelist urls
 		// Todo can be database driven
 		final List<String> apiEndpoints = List.of("/user-mgmt/swagger-ui/**", "/user-mgmt/v3/api-docs/**",
-		        "/user-mgmt/swagger-resources/**", "/user-mgmt/api/v1/auth/**");
+		        "/user-mgmt/swagger-resources/**", "/user-mgmt/api/v1/auth/**", "/book-mgmt/swagger-ui/**",
+		        "/book-mgmt/v3/api-docs/**", "/book-mgmt/swagger-resources/**");
 
 		Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
 		        .noneMatch(uri -> pathMatcher.match(uri, r.getURI().getPath()));

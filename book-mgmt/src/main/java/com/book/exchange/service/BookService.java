@@ -62,7 +62,7 @@ public class BookService {
 
 			// create a book
 			return bookRepository
-					.save(Book.builder().user(user).title(bookRequest.getTitle()).author(bookRequest.getAuthor())
+					.save(Book.builder().userId(user.getId()).title(bookRequest.getTitle()).author(bookRequest.getAuthor())
 							.bookCondition(bookRequest.getCondition()).genre(bookRequest.getGenre())
 							.location(bookRequest.getLocation()).isAvailable(bookRequest.isAvailable()).build());
 		} else {
@@ -84,6 +84,10 @@ public class BookService {
 
 	public List<Book> books() {
 		return bookRepository.findAll();
+	}
+	
+	public List<Book> getBookByUserId(Long userId) {
+		return bookRepository.findByUserId(userId);
 	}
 
 	public Book getBookById(Long bookId) {

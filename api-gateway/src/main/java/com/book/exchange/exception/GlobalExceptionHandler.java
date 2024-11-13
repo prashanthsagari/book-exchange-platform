@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ServerWebExchange;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.cloud.gateway.support.ServiceUnavailableException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -59,6 +62,15 @@ public class GlobalExceptionHandler {
 		        .status(HttpStatus.METHOD_NOT_ALLOWED.name()).path(request.getRequest().getPath().value())
 		        .timeStamp(LocalDateTime.now()).build();
 		return new ResponseEntity<ErrorMessage>(errorBody, HttpStatus.METHOD_NOT_ALLOWED);
+	}
+	
+	@ExceptionHandler(ServiceUnavailableException.class)
+	public ResponseEntity<ErrorMessage> handleServiceNotAvailableExceptions(HttpServletRequest request, ServiceUnavailableException se) {
+		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.SERVICE_UNAVAILABLE.value())
+		        .message(se.getMessage()).status(HttpStatus.SERVICE_UNAVAILABLE.name()).path(request.getServletPath())
+		        .timeStamp(LocalDateTime.now()).build();
+
+		return new ResponseEntity<ErrorMessage>(errorBody, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 
 	@ExceptionHandler(Exception.class)
