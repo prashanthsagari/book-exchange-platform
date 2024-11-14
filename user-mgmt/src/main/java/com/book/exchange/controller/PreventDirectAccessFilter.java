@@ -1,4 +1,4 @@
-package com.book.exchange.security;
+package com.book.exchange.controller;
 
 import java.io.IOException;
 
@@ -32,6 +32,7 @@ public class PreventDirectAccessFilter implements Filter {
 		String hyperlink = "<a href=\"" + url + "\" style=\"color: red;\">Click here</a>";
 		String finalMessage = "<html><body>" + hyperlink + "</body></html>";
 		message = message + finalMessage;
+
 
 		String gatewayOrigin = httpRequest.getHeader("origin");
 		String gatewayId = httpRequest.getHeader("x-gateway-id");

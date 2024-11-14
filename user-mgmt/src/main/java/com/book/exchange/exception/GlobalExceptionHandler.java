@@ -1,7 +1,6 @@
 package com.book.exchange.exception;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class GlobalExceptionHandler {
 		UserReturnDataContextHolder.clearContext();
 		ErrorMessage message = ErrorMessage.builder().code(HttpStatus.UNAUTHORIZED.value())
 		        .path(request.getServletPath()).message(ae.getMessage())
-		        .status("Only " + (3 - attempts) + " attempts left.").build();
+		        .status("Only " + (3 - attempts) + " attempts left.").timeStamp(LocalDateTime.now()).build();
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
 	}
 
@@ -103,6 +102,16 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.internalServerError().body(errorBody);
 	}
 
+	@ExceptionHandler(UserInActiveException.class)
+	public ResponseEntity<ErrorMessage> inactiveUser(HttpServletRequest request, UserInActiveException it) {
+
+		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+		        .status(HttpStatus.INTERNAL_SERVER_ERROR.name()).message(it.getMessage()).timeStamp(LocalDateTime.now())
+		        .path(request.getServletPath()).build();
+
+		return ResponseEntity.internalServerError().body(errorBody);
+	}
+
 	@ExceptionHandler(ResourceAlreadyAvailable.class)
 	public ResponseEntity<ErrorMessage> resourceAlreadyAvailable(HttpServletRequest request,
 	        ResourceAlreadyAvailable ra) {
@@ -118,11 +127,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorMessage> resourceAlreadyAvailable(HttpServletRequest request,
 	        UsernameNotFoundException unfe) {
 
-		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-		        .status(HttpStatus.INTERNAL_SERVER_ERROR.name()).message(unfe.getMessage())
-		        .timeStamp(LocalDateTime.now()).path(request.getServletPath()).build();
+		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.NOT_FOUND.value())
+		        .status(HttpStatus.NOT_FOUND.name()).message(unfe.getMessage()).timeStamp(LocalDateTime.now())
+		        .path(request.getServletPath()).build();
 
-		return ResponseEntity.internalServerError().body(errorBody);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
 	}
 
 	@ExceptionHandler(EntityNotFoundException.class)
@@ -131,6 +140,17 @@ public class GlobalExceptionHandler {
 
 		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.NOT_FOUND.value())
 		        .status(HttpStatus.NOT_FOUND.name()).message(en.getMessage()).timeStamp(LocalDateTime.now())
+		        .path(request.getServletPath()).build();
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+	}
+	
+	@ExceptionHandler(PasswordNotMatchedException.class)
+	public ResponseEntity<ErrorMessage> noMatchPass(HttpServletRequest request,
+			PasswordNotMatchedException en) {
+
+		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+		        .status(HttpStatus.INTERNAL_SERVER_ERROR.name()).message(en.getMessage()).timeStamp(LocalDateTime.now())
 		        .path(request.getServletPath()).build();
 
 		return ResponseEntity.internalServerError().body(errorBody);
@@ -144,7 +164,7 @@ public class GlobalExceptionHandler {
 		        .status(HttpStatus.NOT_FOUND.name()).message(en.getMessage()).timeStamp(LocalDateTime.now())
 		        .path(request.getServletPath()).build();
 
-		return ResponseEntity.internalServerError().body(errorBody);
+		return ResponseEntity.ok().body(errorBody);
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -157,18 +177,17 @@ public class GlobalExceptionHandler {
 		        .timeStamp(LocalDateTime.now()).build();
 		return new ResponseEntity<ErrorMessage>(errorBody, HttpStatus.METHOD_NOT_ALLOWED);
 	}
-	
+
 	@ExceptionHandler(RoleNotFoundException.class)
-	public ResponseEntity<ErrorMessage> roleNotFoundException(HttpServletRequest request,
-			RoleNotFoundException unfe) {
+	public ResponseEntity<ErrorMessage> roleNotFoundException(HttpServletRequest request, RoleNotFoundException unfe) {
 
-		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-		        .status(HttpStatus.INTERNAL_SERVER_ERROR.name()).message(unfe.getMessage())
-		        .timeStamp(LocalDateTime.now()).path(request.getServletPath()).build();
+		ErrorMessage errorBody = ErrorMessage.builder().code(HttpStatus.NOT_FOUND.value())
+		        .status(HttpStatus.NOT_FOUND.name()).message(unfe.getMessage()).timeStamp(LocalDateTime.now())
+		        .path(request.getServletPath()).build();
 
-		return ResponseEntity.internalServerError().body(errorBody);
+		return ResponseEntity.ok().body(errorBody);
 	}
-	
+
 	@ExceptionHandler(ServiceUnavailableException.class)
 	public ResponseEntity<ErrorMessage> handleServiceNotAvailableExceptions(HttpServletRequest request,
 	        ServiceUnavailableException se) {

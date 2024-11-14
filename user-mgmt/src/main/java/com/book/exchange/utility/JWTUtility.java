@@ -2,15 +2,17 @@ package com.book.exchange.utility;
 
 import java.util.Date;
 import java.util.function.Function;
+
 import javax.crypto.SecretKey;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.book.exchange.exception.InvalidTokenException;
-import com.book.exchange.service.CustomUserDetails;
+import com.book.exchange.model.payload.response.UserResponse;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -31,19 +33,12 @@ public class JWTUtility {
 	@Value("${book.jwtExpiration}")
 	private int jwtExpiration;
 
-	public String generateJwtToken(Authentication authentication) {
+	public String generateJwtToken(UserResponse userResponse) {
 
-		CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
-
-		return Jwts.builder()
-				.subject(userPrincipal.getUsername())
-				.claim("username", userPrincipal.getUsername())
-				.claim("email", userPrincipal.getEmail())
-				.issuedAt(new Date(System.currentTimeMillis()))
-				.expiration(new Date(System.currentTimeMillis() + jwtExpiration))
-				.issuer("https://www.prashanthsagari.online")
-				.signWith(key())
-				.compact();
+		return Jwts.builder().subject(userResponse.getUsername()).claim("username", userResponse.getUsername())
+		        .claim("email", userResponse.getEmail()).issuedAt(new Date(System.currentTimeMillis()))
+		        .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+		        .issuer("https://www.prashanthsagari.online").signWith(key()).compact();
 	}
 
 	private SecretKey key() {
@@ -64,7 +59,7 @@ public class JWTUtility {
 	public boolean validateJwtToken(String authToken) {
 		try {
 			Date expiration = getClaims(authToken, Claims::getExpiration);
-			return !expiration.before(new Date());  // Returns true if invalid
+			return !expiration.before(new Date()); // Returns true if invalid
 		} catch (MalformedJwtException e) {
 			logger.error("Invalid JWT token: {}", e.getMessage());
 			throw new InvalidTokenException(e.getMessage());
@@ -77,7 +72,7 @@ public class JWTUtility {
 		} catch (IllegalArgumentException e) {
 			logger.error("JWT claims string is empty: {}", e.getMessage());
 			throw new InvalidTokenException(e.getMessage());
-		} catch(SignatureException se) {
+		} catch (SignatureException se) {
 			logger.error("Modified JWT token: {}", se.getMessage());
 			throw new InvalidTokenException(se.getMessage());
 		}

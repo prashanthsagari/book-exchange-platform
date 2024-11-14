@@ -64,7 +64,8 @@ public class JwtAuthenticationFilter implements GatewayFilter {
 				if (token != null && jwtUtility.validateJwtToken(token)) {
 					String username = jwtUtility.extractUsernameFromToken(token);
 //					request to add username as a header
-					request = exchange.getRequest().mutate().header("username", username).build();
+					request = exchange.getRequest().mutate().header("username", username)
+					        .header("X-Gateway-Id", "api-gateway").header("X-Gateway-Path", "/api-gateway").build();
 
 					// Create a new exchange with the mutated request and continue the chain
 					return chain.filter(exchange.mutate().request(request).build());
@@ -79,6 +80,8 @@ public class JwtAuthenticationFilter implements GatewayFilter {
 		}
 		// testing purpose
 //		exchange.getRequest().mutate().header("username", "Prashanth Sagari").build();
+		exchange.getRequest().mutate()
+		        .header("X-Gateway-Id", "api-gateway").header("X-Gateway-Path", "/api-gateway").build();
 		return chain.filter(exchange);
 	}
 
