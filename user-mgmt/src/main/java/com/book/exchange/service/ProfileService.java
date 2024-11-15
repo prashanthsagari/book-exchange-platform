@@ -35,7 +35,7 @@ public class ProfileService {
 			user.setIsactive(1l);
 			user.setAttempts(0l);
 		} else {
-			throw new PasswordNotMatchedException("Pasword did not match.");
+			throw new PasswordNotMatchedException("Current password is wrong. Please provide correct password.");
 		}
 
 		userRepository.saveAndFlush(user);
@@ -55,12 +55,15 @@ public class ProfileService {
 
 	private void updateProfile(ProfileUpdateRequest profileUpdateRequest, User user) {
 
-		if (StringUtils.hasText(profileUpdateRequest.getCurrentPassword())
-		        && StringUtils.hasText(profileUpdateRequest.getNewPassword())
-		        && passwordEncoder.matches(profileUpdateRequest.getCurrentPassword(), user.getPassword())) {
-			user.setPassword(passwordEncoder.encode(profileUpdateRequest.getNewPassword()));
-		} else {
-			throw new PasswordNotMatchedException("Pasword did not match.");
+		String currentPassword = profileUpdateRequest.getCurrentPassword();
+		String newPassword = profileUpdateRequest.getNewPassword();
+
+		if (StringUtils.hasText(currentPassword) && StringUtils.hasText(newPassword)) {
+			if (passwordEncoder.matches(currentPassword, user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(newPassword));
+			} else {
+				throw new PasswordNotMatchedException("Pasword did not match.");
+			}
 		}
 
 		if (StringUtils.hasText(profileUpdateRequest.getEmail())) {

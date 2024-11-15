@@ -70,7 +70,7 @@ public class BookController {
 	@Operation(summary = "Search books using pagination", description = "Paginated book search")
 	@PostMapping("/search-books")
 	public ResponseEntity<?> searchBooksByCriteria(@RequestBody BookRequest bookRequest,
-	        @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size) {
+	        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
 
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(bookService.searchBooksByCriteria(bookRequest, pageable));

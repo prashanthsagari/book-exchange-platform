@@ -6,7 +6,7 @@ spring:
   application:
      name: book-mgmt
   datasource:
-     url: jdbc:mysql://localhost:3306/bookmgmt?createDatabaseIfNotExist=true
+     url: jdbc:mysql://localhost:3306/book_exchange_db?createDatabaseIfNotExist=true
      username: sagari
      password: sagari
      driver-class-name: com.mysql.cj.jdbc.Driver

@@ -25,8 +25,8 @@ eureka:
             defaultZone: http://localhost:8761/service-discovery/eureka
             
 book:
-  jwtSecret: 8b8c590c7f174NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RRUs3NllmZHptNVVrNG9RJKNLDF786ydfkls3075b9c2b5b3baac9c75
-  jwtExpiration: 30000000
+  jwtSecret: WZT7di2p46QeOL3rgkUzA4B9o9Oc0eZpZMVybqFIguneOoT6fJa82Jzttdn1LTpPmtjcNZFlTvw52YoBiQ
+  jwtExpiration: 3000000
   
 resilience4j.circuitbreaker:
   instances:

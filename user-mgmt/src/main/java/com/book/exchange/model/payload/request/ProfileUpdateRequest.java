@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.book.exchange.entity.Role;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,7 @@ public class ProfileUpdateRequest {
 	@Email
 	private String email;
 
+	@Hidden  // This will hide the field in Swagger
 	private Set<Role> roles;
 	
 	@Size(min = 6, max = 40, message = "Password must be between 6 and 40")

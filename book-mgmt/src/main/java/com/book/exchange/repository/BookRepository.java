@@ -14,16 +14,16 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	Page<Book> findByUserId(Long userId, Pageable pageable);
 
-	Page<Book> findByTitle(String title, Pageable pageable);
+	Page<Book> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 
-	Page<Book> findByAuthor(String author, Pageable pageable);
+	Page<Book> findByAuthorContainingIgnoreCase(String author, Pageable pageable);
 
-	Page<Book> findByGenre(String genre, Pageable pageable);
+	Page<Book> findByGenreContainingIgnoreCase(String genre, Pageable pageable);
 
-	Page<Book> findByBookCondition(String bookCondition, Pageable pageable);
+	Page<Book> findByBookConditionContainingIgnoreCase(String bookCondition, Pageable pageable);
 
-	Page<Book> findByLocation(String location, Pageable pageable);
+	Page<Book> findByLocationContainingIgnoreCase(String location, Pageable pageable);
 
-	Page<Book> findByIsAvailable(Boolean isAvailable, Pageable pageable);
+	Page<Book> findByIsAvailableContainingIgnoreCase(Boolean isAvailable, Pageable pageable);
 
 }

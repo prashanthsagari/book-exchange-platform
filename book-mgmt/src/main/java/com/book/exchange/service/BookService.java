@@ -29,27 +29,27 @@ public class BookService {
 	public Page<Book> searchBooksByCriteria(BookRequest bookRequest, Pageable pageable) {
 
 		if (StringUtils.hasText(bookRequest.getTitle())) {
-			return bookRepository.findByTitle(bookRequest.getTitle(), pageable);
+			return bookRepository.findByTitleContainingIgnoreCase(bookRequest.getTitle(), pageable);
 		}
 
 		if (StringUtils.hasText(bookRequest.getAuthor())) {
-			return bookRepository.findByAuthor(bookRequest.getAuthor(), pageable);
+			return bookRepository.findByAuthorContainingIgnoreCase(bookRequest.getAuthor(), pageable);
 		}
 
 		if (StringUtils.hasText(bookRequest.getGenre())) {
-			return bookRepository.findByGenre(bookRequest.getGenre(), pageable);
+			return bookRepository.findByGenreContainingIgnoreCase(bookRequest.getGenre(), pageable);
 		}
 
 		if (StringUtils.hasText(bookRequest.getCondition())) {
-			return bookRepository.findByBookCondition(bookRequest.getCondition(), pageable);
+			return bookRepository.findByBookConditionContainingIgnoreCase(bookRequest.getCondition(), pageable);
 		}
 
 		if (StringUtils.hasText(bookRequest.getLocation())) {
-			return bookRepository.findByLocation(bookRequest.getLocation(), pageable);
+			return bookRepository.findByLocationContainingIgnoreCase(bookRequest.getLocation(), pageable);
 		}
 
 		if (bookRequest.isAvailable() == false || bookRequest.isAvailable() == true) {
-			return bookRepository.findByIsAvailable(bookRequest.isAvailable(), pageable);
+			return bookRepository.findByIsAvailableContainingIgnoreCase(bookRequest.isAvailable(), pageable);
 		}
 
 		return null;
@@ -61,10 +61,10 @@ public class BookService {
 			User user = userData.get();
 
 			// create a book
-			return bookRepository
-					.save(Book.builder().userId(user.getId()).title(bookRequest.getTitle()).author(bookRequest.getAuthor())
-							.bookCondition(bookRequest.getCondition()).genre(bookRequest.getGenre())
-							.location(bookRequest.getLocation()).isAvailable(bookRequest.isAvailable()).build());
+			return bookRepository.save(
+			        Book.builder().userId(user.getId()).title(bookRequest.getTitle()).author(bookRequest.getAuthor())
+			                .bookCondition(bookRequest.getCondition()).genre(bookRequest.getGenre())
+			                .location(bookRequest.getLocation()).isAvailable(bookRequest.isAvailable()).build());
 		} else {
 			throw new EntityNotFoundException("User is not available.");
 		}
@@ -85,7 +85,7 @@ public class BookService {
 	public List<Book> books() {
 		return bookRepository.findAll();
 	}
-	
+
 	public List<Book> getBookByUserId(Long userId) {
 		return bookRepository.findByUserId(userId);
 	}
@@ -124,7 +124,9 @@ public class BookService {
 			book.setGenre(bookRequest.getGenre());
 		}
 		if (bookRequest.isAvailable()) {
-			book.setAvailable(bookRequest.isAvailable());
+			book.setAvailable(true);
+		} else {
+			book.setAvailable(false);
 		}
 
 		if (StringUtils.hasText(bookRequest.getCondition())) {
