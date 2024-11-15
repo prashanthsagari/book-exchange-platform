@@ -13,6 +13,7 @@ CREATE DATABASE book_exchange_db;
 USE book_exchange_db;
 
 ### Users Table:
+```sql
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -23,16 +24,20 @@ CREATE TABLE users (
 );
 
 ### Roles Table:
+```sql
 CREATE TABLE roles (
     role_id INT PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 ### Insert Default Roles:
+```sql
 INSERT INTO roles(role_name) VALUES('USER');
+```sql
 INSERT INTO roles(role_name) VALUES('ADMIN');
 
 ### User Roles Table:
+```sql
 CREATE TABLE user_roles (
     user_id INT,
     role_id INT,
@@ -43,6 +48,7 @@ CREATE TABLE user_roles (
 );
 
 ### Books Table:
+```sql
 CREATE TABLE books (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
