@@ -15,17 +15,19 @@ USE book_exchange_db;
 ### Users Table:
 ```sql
 CREATE TABLE users (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(500),
-    email VARCHAR(100),
-    isactive INT DEFAULT 0,
-    attempts INT DEFAULT 0
+    user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(500) NOT NULL,
+    isactive BIGINT NOT NULL,
+    attempts BIGINT NOT NULL,
+    phone VARCHAR(10) NOT NULL,
+    CONSTRAINT chk_phone_format CHECK (phone REGEXP '^[0-9]{1,10}$')
 );
 
 ### Roles Table:
 CREATE TABLE roles (
-    role_id INT PRIMARY KEY AUTO_INCREMENT,
+    role_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(50) NOT NULL UNIQUE
 );
 
@@ -35,13 +37,14 @@ INSERT INTO roles(role_name) VALUES('ADMIN');
 
 ### User Roles Table:
 CREATE TABLE user_roles (
-    user_id INT,
-    role_id INT,
+    user_id BIGINT,
+    role_id BIGINT,
     PRIMARY KEY (user_id, role_id),
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
     CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES roles(role_id) 
     ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 ### Books Table:
 CREATE TABLE books (
