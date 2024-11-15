@@ -70,6 +70,24 @@ CREATE TABLE books (
 ### Build and Compile the Project
 - To build and compile the project, run the following command:
     mvn clean install
+ ### Output 
+
+<pre style="color: green;">
+[INFO] Reactor Summary for Book Exchange Platform 0.0.1-SNAPSHOT:
+[INFO]
+[INFO] Book Exchange Platform ............................. SUCCESS [  3.711 s]
+[INFO] API Gateway ........................................ SUCCESS [ 10.627 s]
+[INFO] Eureka Service Discovery for Book Exchange Platform  SUCCESS [  4.093 s]
+[INFO] User Management .................................... SUCCESS [  8.107 s]
+[INFO] Book Management .................................... SUCCESS [ 30.932 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  58.592 s
+[INFO] Finished at: 2024-11-15T10:54:15+05:30
+[INFO] ------------------------------------------------------------------------
+</pre>
+
 
 ### Start the Application
 - Navigate to the target folder and run the JAR file using the following command:
