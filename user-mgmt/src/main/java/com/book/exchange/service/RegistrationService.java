@@ -19,7 +19,7 @@ import com.book.exchange.repository.RoleRepository;
 import com.book.exchange.repository.UserRepository;
 
 @Service
-public class SignUpService {
+public class RegistrationService {
 
 	@Autowired
 	private UserRepository userRepository;

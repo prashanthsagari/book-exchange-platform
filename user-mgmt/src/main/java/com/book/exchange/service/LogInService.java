@@ -18,7 +18,7 @@ import com.book.exchange.security.UserReturnDataContextHolder;
 import com.book.exchange.utility.JWTUtility;
 
 @Service
-public class SignInService {
+public class LogInService {
 
 	@Autowired
 	private JWTUtility jwtUtility;

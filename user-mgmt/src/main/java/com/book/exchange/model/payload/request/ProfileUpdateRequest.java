@@ -39,6 +39,9 @@ public class ProfileUpdateRequest {
 	@Size(min = 6, max = 40, message = "Password must be between 6 and 40")
 	private String newPassword;
 	
+	@Size(min = 6, max = 40, message = "Password must be between 6 and 40")
+	private String confirmPassword;
+	
 	@Size(max = 10)
 	private String phone;
 }

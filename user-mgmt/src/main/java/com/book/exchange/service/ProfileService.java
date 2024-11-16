@@ -14,6 +14,7 @@ import com.book.exchange.exception.UserNotRegisteredException;
 import com.book.exchange.model.payload.request.ProfileUpdateRequest;
 import com.book.exchange.model.payload.response.UserResponse;
 import com.book.exchange.repository.UserRepository;
+import com.book.exchange.utility.RandomPasswordGenerator;
 
 @Service
 public class ProfileService {
@@ -24,22 +25,20 @@ public class ProfileService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public String resetPassword(ProfileUpdateRequest profileUpdateRequest) {
+	public String accountRecovery(ProfileUpdateRequest profileUpdateRequest) {
 		User user = userRepository.findByUsername(profileUpdateRequest.getUsername())
 		        .orElseThrow(() -> new UserNotRegisteredException(" User is not found."));
 
-		if (StringUtils.hasText(profileUpdateRequest.getCurrentPassword())
-		        && StringUtils.hasText(profileUpdateRequest.getNewPassword())
-		        && passwordEncoder.matches(profileUpdateRequest.getCurrentPassword(), user.getPassword())) {
-			user.setPassword(passwordEncoder.encode(profileUpdateRequest.getNewPassword()));
-			user.setIsactive(1l);
-			user.setAttempts(0l);
-		} else {
-			throw new PasswordNotMatchedException("Current password is wrong. Please provide correct password.");
+		if (!user.getEmail().equals(profileUpdateRequest.getEmail())) {
+			throw new PasswordNotMatchedException("Details are not matched in the System.");
 		}
+		String plainPassword = RandomPasswordGenerator.randomPasswordGenerator();
+		user.setPassword(passwordEncoder.encode(plainPassword));
+		user.setIsactive(1l);
+		user.setAttempts(0l);
 
 		userRepository.saveAndFlush(user);
-		return "Your new password is %s".formatted(profileUpdateRequest.getNewPassword());
+		return "Your new password is %s".formatted(plainPassword);
 	}
 
 	public UserResponse update(ProfileUpdateRequest profileUpdateRequest) {
@@ -57,12 +56,13 @@ public class ProfileService {
 
 		String currentPassword = profileUpdateRequest.getCurrentPassword();
 		String newPassword = profileUpdateRequest.getNewPassword();
+		String confirmPassword = profileUpdateRequest.getConfirmPassword();
 
-		if (StringUtils.hasText(currentPassword) && StringUtils.hasText(newPassword)) {
+		if (StringUtils.hasText(newPassword) && StringUtils.hasText(confirmPassword) && newPassword.equals(confirmPassword)) {
 			if (passwordEncoder.matches(currentPassword, user.getPassword())) {
 				user.setPassword(passwordEncoder.encode(newPassword));
 			} else {
-				throw new PasswordNotMatchedException("Pasword did not match.");
+				throw new PasswordNotMatchedException("Wrong Password !!! ");
 			}
 		}
 

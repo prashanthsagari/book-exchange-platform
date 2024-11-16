@@ -32,21 +32,21 @@ public class FallbackController {
 
 	@GetMapping("/fallback/book-mgmt")
 	public String userMgmtFallback5() throws ServiceUnavailableException {
-		throw new ServiceUnavailableException("User Service is currently unavailable. Please try again later.");
+		throw new ServiceUnavailableException("Book Management Service is currently unavailable. Please try again later.");
 	}
 
 	@PostMapping("/fallback/book-mgmt")
 	public String userMgmtFallback6() throws ServiceUnavailableException {
-		throw new ServiceUnavailableException("User Service is currently unavailable. Please try again later.");
+		throw new ServiceUnavailableException("Book Management Service is currently unavailable. Please try again later.");
 	}
 
 	@PutMapping("/fallback/book-mgmt")
 	public String userMgmtFallback7() throws ServiceUnavailableException {
-		throw new ServiceUnavailableException("User Service is currently unavailable. Please try again later.");
+		throw new ServiceUnavailableException("Book Management Service is currently unavailable. Please try again later.");
 	}
 
 	@DeleteMapping("/fallback/book-mgmt")
 	public String userMgmtFallback8() throws ServiceUnavailableException {
-		throw new ServiceUnavailableException("User Service is currently unavailable. Please try again later.");
+		throw new ServiceUnavailableException("Book Management Service is currently unavailable. Please try again later.");
 	}
 }

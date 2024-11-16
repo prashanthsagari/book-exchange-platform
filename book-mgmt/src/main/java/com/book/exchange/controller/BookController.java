@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.book.exchange.model.payload.request.BookRequest;
+import com.book.exchange.model.payload.request.BookRequestPayload;
 import com.book.exchange.service.BookService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,25 +51,25 @@ public class BookController {
 
 	@Operation(summary = "Create new book entry by user", description = "Creates new book in the system")
 	@PostMapping("/book")
-	public ResponseEntity<?> createBook(@RequestBody BookRequest book) {
+	public ResponseEntity<?> createBook(@RequestBody BookRequestPayload book) {
 		return ResponseEntity.ok(bookService.createBook(book));
 	}
 
 	@Operation(summary = "Update book details by book id", description = "Updates book information in the system")
 	@PutMapping("/book/{bookId}")
-	public ResponseEntity<?> updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookRequest book) {
+	public ResponseEntity<?> updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookRequestPayload book) {
 		return ResponseEntity.ok(bookService.updateBook(bookId, book));
 	}
 
 	@Operation(summary = "Delete book by book id", description = "Deletes book entry from the system")
 	@DeleteMapping("/book/{bookId}")
-	public ResponseEntity<?> deleteBook(@PathVariable("bookId") Long bookId) {
-		return ResponseEntity.ok(bookService.deleteBook(bookId));
+	public ResponseEntity<?> deleteBook(@PathVariable("bookId") Long bookId, @RequestParam Long userId) {
+		return ResponseEntity.ok(bookService.deleteBook(bookId, userId));
 	}
 
 	@Operation(summary = "Search books using pagination", description = "Paginated book search")
 	@PostMapping("/search-books")
-	public ResponseEntity<?> searchBooksByCriteria(@RequestBody BookRequest bookRequest,
+	public ResponseEntity<?> searchBooksByCriteria(@RequestBody BookRequestPayload bookRequest,
 	        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
 
 		Pageable pageable = PageRequest.of(page, size);

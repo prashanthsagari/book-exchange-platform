@@ -10,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class BookRequest {
+public class BookRequestPayload {
 
 	private Long userId;
 	private String title;
