@@ -189,6 +189,11 @@ CREATE TABLE if not exists books (
 ```bash
   mvn clean install
 ```
+### Open command prompt under root directory of this project and run below command in windows operating system
+```bash
+app_start_windows.bat
+```
+
  ### Output 
 
 <pre style='color: green;'>
