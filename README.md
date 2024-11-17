@@ -176,10 +176,12 @@ CREATE TABLE books (
 
 ### Build and Compile the Project
 - To build and compile the project, run the following command:
-    mvn clean install
+```bash
+  mvn clean install
+```
  ### Output 
 
-<pre style="color: green;">
+<pre style='color: green;'>
 [INFO] Reactor Summary for Book Exchange Platform 0.0.1-SNAPSHOT:
 [INFO]
 [INFO] Book Exchange Platform ............................. SUCCESS [  3.711 s]
