@@ -1,4 +1,19 @@
 # Book Exchange Project
+Welcome to Book Exchange Platform! This guide will walk you through the steps to clone the repository, install dependencies, and run the application locally.
+
+## Note : If git is not installed, download the project zip file from the github
+
+```bash
+git clone https://github.com/prashanthsagari/book-exchange-platform.git
+```
+
+## 🛠️ Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- **Java** (latest)
+- **git**  (NOT mandatory)
+- **maven**
 
 ## Database Setup
 
