@@ -8,11 +8,11 @@
 ### 2. Run the Following SQL Scripts
 
 ```sql
-### Create and Use the Database:
+-- ### Create and Use the Database:
 CREATE DATABASE book_exchange_db;
 USE book_exchange_db;
 
-### Users Table:
+-- ### Users Table:
 CREATE TABLE users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL UNIQUE,
@@ -24,17 +24,17 @@ CREATE TABLE users (
     CONSTRAINT chk_phone_format CHECK (phone REGEXP '^[0-9]{1,10}$')
 );
 
-### Roles Table:
+-- ### Roles Table:
 CREATE TABLE roles (
     role_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(50) NOT NULL UNIQUE
 );
 
-### Insert Default Roles:
+-- ### Insert Default Roles:
 INSERT INTO roles(role_name) VALUES('USER');
 INSERT INTO roles(role_name) VALUES('ADMIN');
 
-### User Roles Table:
+-- ### User Roles Table:
 CREATE TABLE user_roles (
     user_id BIGINT,
     role_id BIGINT,
