@@ -199,6 +199,13 @@ CREATE TABLE books (
 
 ### Start the Application
 - Navigate to the target folder and run the JAR file using the following command:
-java -jar <jar_filename>.jar
+java -jar <jar_filename>.jar 
+
+NOTE:  You need to Start four services 
+1. Api Gateway
+2. Eureka Service Discovery
+3. User Management Service
+4. Book Management Service
+
 
 
