@@ -38,7 +38,7 @@ public class BookController {
 	}
 
 	@Operation(summary = "Get all books by User Id", description = "Fetches all books from the system which are belongs to requested user")
-	@GetMapping("/book")
+	@GetMapping("/books/user")
 	public ResponseEntity<?> getBookByUserId(@RequestParam Long userId) {
 		return ResponseEntity.ok(bookService.getBookByUserId(userId));
 	}

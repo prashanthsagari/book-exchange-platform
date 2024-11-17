@@ -14,7 +14,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-//@Component
+@Component
 public class PreventDirectAccessFilter implements Filter {
 
 	@Value("${API_GATEWAY}")

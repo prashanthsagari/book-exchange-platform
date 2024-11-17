@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin
 @RequestMapping(value = "/api/v1/profile", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "UserManagementController", description = "User management service")
-public class UserManagementController {
+public class ProfileManagementController {
 
 	@Autowired
 	private ProfileService profileService;

@@ -66,6 +66,114 @@ CREATE TABLE books (
 - Ensure your MySQL server is running before executing these scripts.
 - Modify the `application.yml` for MySQL configuration details like username, password, and URL based on your local setup.
 
+### Project Structure
+
+## Api Gateway
+<pre>
+├───.mvn
+│   └───wrapper
+├───.settings
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───book
+    │   │           └───exchange
+    │   │               ├───config
+    │   │               ├───controller
+    │   │               ├───exception
+    │   │               └───security
+    │   └───resources
+    │       ├───static
+    │       └───templates
+    └───test
+        ├───java
+        └───resources
+</pre>
+
+## Eureka Service Discovery
+
+<pre>
+├───.mvn
+│   └───wrapper
+├───.settings
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───book
+    │   │           └───exchange
+    │   │               ├───controller
+    │   │               └───security
+    │   └───resources
+    └───test
+        ├───java
+        └───resources
+</pre>
+
+## User Management Service
+<pre>
+├───.mvn
+│   └───wrapper
+├───.settings
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───book
+    │   │           └───exchange
+    │   │               ├───controller
+    │   │               ├───entity
+    │   │               ├───enums
+    │   │               ├───exception
+    │   │               ├───model
+    │   │               │   └───payload
+    │   │               │       ├───request
+    │   │               │       └───response
+    │   │               ├───repository
+    │   │               ├───security
+    │   │               ├───service
+    │   │               ├───swagger
+    │   │               │   └───config
+    │   │               └───utility
+    │   └───resources
+    │       ├───static
+    │       └───templates
+    └───test
+        ├───java
+        │   └───user_mgmt
+        └───resources
+</pre>
+
+## Book Management Service
+
+<pre>
+├───.mvn
+│   └───wrapper
+├───.settings
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───book
+    │   │           └───exchange
+    │   │               ├───controller
+    │   │               ├───entity
+    │   │               ├───exception
+    │   │               ├───model
+    │   │               │   └───payload
+    │   │               │       └───request
+    │   │               ├───repository
+    │   │               ├───security
+    │   │               └───service
+    │   └───resources
+    └───test
+        ├───java
+        │   └───com
+        │       └───book
+        │           └───exchange
+        └───resources
+</pre>
 
 ### Build and Compile the Project
 - To build and compile the project, run the following command:
