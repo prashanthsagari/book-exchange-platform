@@ -7,13 +7,14 @@
 
 ### 2. Run the Following SQL Scripts
 
+```sql
 **Create and Use the Database:**
 
 CREATE DATABASE book_exchange_db;
 USE book_exchange_db;
 
 ### Users Table:
-```sql
+
 CREATE TABLE users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL UNIQUE,
