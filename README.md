@@ -9,11 +9,11 @@
 
 ```sql
 -- ### Create and Use the Database:
-CREATE DATABASE book_exchange_db;
+CREATE DATABASE if not exists book_exchange_db;
 USE book_exchange_db;
 
 -- ### Users Table:
-CREATE TABLE users (
+CREATE TABLE if not exists users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL UNIQUE,
     email VARCHAR(50) NOT NULL UNIQUE,
@@ -25,17 +25,27 @@ CREATE TABLE users (
 );
 
 -- ### Roles Table:
-CREATE TABLE roles (
+CREATE TABLE if not exists roles (
     role_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- ### Insert Default Roles:
-INSERT INTO roles(role_name) VALUES('USER');
-INSERT INTO roles(role_name) VALUES('ADMIN');
+INSERT INTO roles(role_name)
+SELECT 'USER'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE role_name = 'USER'
+);
+
+INSERT INTO roles(role_name)
+SELECT 'ADMIN'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE role_name = 'ADMIN'
+);
+
 
 -- ### User Roles Table:
-CREATE TABLE user_roles (
+CREATE TABLE if not exists user_roles (
     user_id BIGINT,
     role_id BIGINT,
     PRIMARY KEY (user_id, role_id),
@@ -46,7 +56,7 @@ CREATE TABLE user_roles (
 
 
 ### Books Table:
-CREATE TABLE books (
+CREATE TABLE if not exists books (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255),
