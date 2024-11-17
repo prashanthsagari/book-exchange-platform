@@ -7,10 +7,8 @@
 
 ### 2. Run the Following SQL Scripts
 
-
-### Create and Use the Database:
 ```sql
-
+### Create and Use the Database:
 CREATE DATABASE book_exchange_db;
 USE book_exchange_db;
 
@@ -60,7 +58,7 @@ CREATE TABLE books (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) 
     ON DELETE CASCADE
 );
-
+```
 
 
 ### Notes:
